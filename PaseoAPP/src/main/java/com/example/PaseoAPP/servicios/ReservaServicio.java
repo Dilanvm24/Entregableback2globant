@@ -61,12 +61,18 @@ public class ReservaServicio {
       
   }
 
-  public boolean eliminarReservaEnBD(UUID id) {
-    return false;
-  }
+public void eliminarReservaEnBD(UUID id) {
+    if (!repositorioReserva.existsById(id)) {
+        throw new ResponseStatusException(
+            HttpStatus.NOT_FOUND,
+            "Reserva no encontrada con ID: " + id
+        );
+    }
 
-  public List<Reserva> buscarReservaEnBD(Reserva datos) {
+    repositorioReserva.deleteById(id);
+}
 
+  public List<Reserva> buscarReservaEnBD() {
     List<Reserva> reservaEncontrada=this.repositorioReserva.findAll();
     return reservaEncontrada;
   }

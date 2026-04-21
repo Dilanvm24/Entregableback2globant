@@ -65,11 +65,19 @@ public class EspacioServicio {
     
     }
 
-   public boolean eliminarEspacioEnBD(UUID id){
-   return false;
+  public void eliminarEspacioEnBD(UUID id) {
+
+    if (!repositorioEspacio.existsById(id)) {
+        throw new ResponseStatusException(
+            HttpStatus.NOT_FOUND,
+            "Espacio no encontrado con ID: " + id
+        );
     }
 
-   public List<Espacio> buscarEspacioEnBD(Espacio datosEspacio){
+    repositorioEspacio.deleteById(id);
+}
+
+   public List<Espacio> buscarEspacioEnBD(){
     List<Espacio> espacioEncontrados=this.repositorioEspacio.findAll();
    return espacioEncontrados;
     }
